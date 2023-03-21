@@ -8,7 +8,12 @@
     z-index: 999;
     &.active {
         background-color: white;
-        color: black;
+        color: black ;
+        .register_btn {
+            color: black !important;
+            border: 1px solid black !important;
+        }
+       
     }
 
     .container {
@@ -19,7 +24,6 @@
         .logo {
             font-size: 34px;
             font-weight: bold;
-
             .dot {
                 color: #1dbf73
             }
@@ -44,7 +48,6 @@
                     border-radius: 50%;
                     object-fit: cover;
                 }
-
                 .options {
                     position: absolute;
                     top: 40px;
@@ -69,7 +72,7 @@
                 }
             }
 
-            button {
+            .register_btn {
                 color: white;
                 padding: 10px 20px;
                 border-radius: 5px;

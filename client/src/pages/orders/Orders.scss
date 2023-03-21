@@ -1,10 +1,7 @@
 .orders {
-    display: flex;
-    justify-content: center;
- 
+
     margin-top: 105px;
     .container {
-      width: 1400px;
       padding: 50px 0px;
   
       .title {
@@ -30,7 +27,7 @@
             text-align: left;
           }
           td {
-            
+  
             sup{
               font-size: 12px;
             }
@@ -39,11 +36,13 @@
               max-width: 80px;
               max-height: 40px;
               object-fit: cover;
+            
             }
   
             .message {
               width: 30px;
               cursor: pointer;
+              margin-top: 0;
             }
           }
           &:nth-child(even) {
