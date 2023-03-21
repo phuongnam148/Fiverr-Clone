@@ -1,0 +1,113 @@
+.featured {
+    height: 680px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-image: url("/img/bg-hero-1-1792-x1.webp");
+    background-size: 100% 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+
+    animation-name: changBg;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: step-end;
+
+
+    @keyframes changBg {
+        0% {
+            background-image: url("/img/bg-hero-4-1792-x1.webp");
+            animation-delay: 50s;
+        }
+
+        25% {
+            background-image: url("/img/bg-hero-5-1792-x1.webp");
+            animation-delay: 50s;
+        }
+
+        50% {
+            background-image: url("/img/bg-hero-6-1792-x1.webp");
+            animation-delay: 50s;
+        }
+
+        75% {
+            background-image: url("/img/bg-hero-2-1792-x1.webp");
+            animation-delay: 50s;
+        }
+
+        100% {
+            background-image: url("/img/bg-hero-3-1792-x1.webp");
+            animation-delay: 50s;
+        }
+    }
+
+    .container {
+        h1 {
+            font-size: 50px;
+
+            i {
+                font-weight: 450;
+            }
+        }
+
+        .search {
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+            border-radius: 5px;
+            width: 50%;
+            margin: 20px 0;
+
+            .searchInput {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 90%;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                    margin: 10px;
+                }
+
+                input {
+                    border: none;
+                    outline: none;
+                    width: 90%;
+                    font-size: 14px;
+                }
+            }
+
+            button {
+                width: 120px;
+                height: 50px;
+                border: none;
+                background-color: #1dbf73;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                color: white;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+            }
+        }
+
+        .popular {
+            font-weight: bolder;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            span {}
+
+            button {
+                background-color: transparent;
+                border: 1px solid white;
+                border-radius: 20px;
+                cursor: pointer;
+                color: white;
+                padding: 5px 10px;
+            }
+        }
+    }
+}

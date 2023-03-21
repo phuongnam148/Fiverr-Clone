@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@200;300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: 'Exo', sans-serif; */
+  font-family: 'Montserrat', sans-serif;
+}
+body {
+  background-color: #fff;
+  /* color: #62646a; */
+
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+.app{
+  position: relative;
+}
+.container{
+  margin: auto;
+  width: 1400px;
+}
