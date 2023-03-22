@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import upload from '../../utils/upload';
+import newRequest from '../../utils/newRequest';
+import { useNavigate } from 'react-router-dom';
+
 import './Register.scss';
 const Register = () => {
   const [file, setFile] = useState(null);
@@ -10,9 +14,7 @@ const Register = () => {
     isSeller: false,
     desc: '',
   });
-
-  console.log(user);
-
+  const navigate = useNavigate();
   const handelChange = (e) => {
     setUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -24,9 +26,24 @@ const Register = () => {
       return { ...prev, isSeller: e.target.checked };
     });
   };
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    const url = await upload(file);
+    try {
+      await newRequest.post('/auth/register', {
+        ...user,
+        img: url,
+      });
+      // console.log("ok");
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="register">
-      <form>
+      <form onSubmit={handelSubmit}>
         <div className="left">
           <h1>Create a new account</h1>
           <label htmlFor="">Username</label>
