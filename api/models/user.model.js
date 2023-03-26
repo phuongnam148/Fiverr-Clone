@@ -19,6 +19,7 @@ const userSchema = new Schema({
     img: {
         type: String,
         require: false,
+        default: '',
     },
     country: {
         type: String,

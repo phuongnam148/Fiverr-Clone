@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-    gigId:{
+    gigID:{
         type:String,
         required: true
     },
@@ -18,15 +18,11 @@ const orderSchema = new Schema({
         type:Number,
         required: true
     },
-    buyerId:{
+    buyerID:{
         type:String,
         required: true
     },
-    sellerId:{
-        type:String,
-        required: true
-    },
-    buyerId:{
+    sellerID:{
         type:String,
         required: true
     },

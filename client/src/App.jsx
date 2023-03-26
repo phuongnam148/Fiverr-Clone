@@ -12,15 +12,19 @@ import Message from './pages/Message/Message';
 import Messages from './pages/messages/Messages';
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar />
-        {/* <div style={{marginTop: 110+'px'}}></div> */}
-        <Outlet />
-        <Footer />
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </QueryClientProvider>
       </div>
     );
   };

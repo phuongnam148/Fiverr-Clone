@@ -7,11 +7,11 @@ const messageSchema = new Schema({
         require: true,
         unique: true
     },
-    sellerId: {
+    sellerID: {
         type: String,
         require: true,
     },
-    buyerId: {
+    buyerID: {
         type: String,
         require: true,
     },

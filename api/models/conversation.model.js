@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const conversationSchema = new Schema({
-    conversationId: {
+    conversationID: {
         type: String,
         require: true,
     },
-    userId: {
+    userID: {
         type: String,
         require: true,
     },

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const CatCard = ({ item }) => {
   return (
-    <Link to="/gigs?cat=design">
+    <Link to="/gigs?category=">
       <div className="catCard">
         <img src={item.img} />
         <span className="desc">{item.desc}</span>
