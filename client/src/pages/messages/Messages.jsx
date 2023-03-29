@@ -1,17 +1,18 @@
 import React from 'react';
 import './Messages.scss';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import newRequest from '../../utils/newRequest';
 const Messages = () => {
-  const currentUser = {
-    id: 1,
-    username: 'Anna',
-    isSeller: true,
-  };
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-  const message = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-  maxime cum corporis esse aspernatur laborum dolorum? Animi
-  molestias aliquam, cum nesciunt, aut, ut quam vitae saepe repellat
-  nobis praesentium placeat.`;
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ['conversations'],
+    queryFn: () =>
+      newRequest.get(`/conversations`).then((res) => {
+        return res.data;
+      }),
+  });
 
   return (
     <div className="messages">
