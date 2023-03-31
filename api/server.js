@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)
 app.use("/api/gigs", gigRouter)
-app.use("/api/message", messageRouter)
+app.use("/api/messages", messageRouter)
 app.use("/api/conversations", conversationRouter)
 app.use("/api/reviews", reviewRouter)
 app.use("/api/orders", orderRouter)

@@ -1,7 +1,6 @@
 import React from 'react';
 import './Messages.scss';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import newRequest from '../../utils/newRequest';
 import TrMessagesName from './TrMessagesName';
 
@@ -15,8 +14,20 @@ const Messages = () => {
         return res.data;
       }),
   });
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (id) => {
+      return newRequest.put(`/conversations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['conversations']);
+    },
+  });
 
-  const userId = currentUser.isSeller ? data?.buyerID : data?.sellerID;
+  const handelRead = (id) => {
+    console.log(id);
+    mutation.mutate(id);
+  };
 
   return (
     <div className="messages">
@@ -35,12 +46,12 @@ const Messages = () => {
                 <th>{currentUser.isSeller ? 'Buyer' : 'Seller'}</th>
                 <th>Last Message</th>
                 <th>Date</th>
-                <th>Action</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {data.map((c) => (
-                <TrMessagesName key={c.id} c={c} />
+                <TrMessagesName key={c.id} c={c} handelRead={handelRead} />
               ))}
             </tbody>
           </table>

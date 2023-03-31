@@ -2,30 +2,17 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const messageSchema = new Schema({
-    id: {
+    conversationId: {
         type: String,
-        require: true,
-        unique: true
+        required: true,
     },
-    sellerID: {
+    userId: {
         type: String,
-        require: true,
+        required: true,
     },
-    buyerID: {
+    desc: {
         type: String,
-        require: true,
-    },
-    readBySeller: {
-        type: Boolean,
-        require: true,
-    },
-    readByBuyer: {
-        type: Boolean,
-        require: true,
-    },
-    lastMessage: {
-        type: String,
-        require: false,
+        required: true,
     },
 }, {
     timestamps: true

@@ -34,13 +34,17 @@ export const getSingleConversations = async (req, res, next) => {
 }
 export const updateConversation = async (req, res, next) => {
     try {
-        const updateConversation = await Conversation.findOneAndUpdate({ id: req.params.id }, {
-            $ser: {
-                // readBySeller: req.isSeller,
-                // readByBuyer: !req.isSeller,
-                ...(req.isSeller ? { readBySeller: true } : { readByBuyer: true }),
-            }
-        }, { new: true })  // dùng để return new conversation
+        const updateConversation = await Conversation.findOneAndUpdate(
+            { id: req.params.id },
+            {
+                $set: {
+                    // readBySeller: req.isSeller,
+                    // readByBuyer: !req.isSeller,
+                    ...(req.isSeller ? { readBySeller: true } : { readByBuyer: true }),
+                }
+            },
+            { new: true }
+        )  //  return new conversation
 
         res.status(200).send(updateConversation)
 
