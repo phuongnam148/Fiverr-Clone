@@ -8,16 +8,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import './Gig.scss';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import Reviews from '../../components/reviews/Reviews';
 const Gig = () => {
-  const param = useParams();
+  const { gigID } = useParams();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: [param.id],
+    queryKey: [gigID],
     queryFn: () =>
-      newRequest.get(`/gigs/single/${param.id}`).then((res) => {
+      newRequest.get(`/gigs/single/${gigID}`).then((res) => {
         return res.data;
       }),
   });
@@ -34,7 +34,7 @@ const Gig = () => {
       newRequest.get(`/users/${userId}`).then((res) => {
         return res.data;
       }),
-    enabled: !!userId,    // ko có user id sẽ ko chạy hàm này
+    enabled: !!userId, // ko có user id sẽ ko chạy hàm này
   });
   return (
     <div className="gig">
@@ -82,17 +82,15 @@ const Gig = () => {
               modules={[Navigation]}
               className="slider"
             >
-              {data.images.length > 0 ? (
-                data.images.map((image) => (
-                  <SwiperSlide key={image}>
+              <SwiperSlide>
+                <img src={data.cover} alt="" />
+              </SwiperSlide>
+              {data.images &&
+                data.images.map((image,index) => (
+                  <SwiperSlide key={index}>
                     <img src={image} alt="" />
                   </SwiperSlide>
-                ))
-              ) : (
-                <SwiperSlide>
-                  <img src={data.cover} alt="" />
-                </SwiperSlide>
-              )}
+                ))}
             </Swiper>
 
             <h2>About This Gig</h2>
@@ -162,7 +160,7 @@ const Gig = () => {
                 </div>
               </div>
             )}
-            <Reviews gigID={param.id} />
+            <Reviews gigID={gigID} />
           </div>
           <div className="right">
             <div className="price">
@@ -173,7 +171,7 @@ const Gig = () => {
             <div className="details">
               <div className="item">
                 <img src="/img/clock.png" alt="" />
-                <span>{data.deliveryDate}</span>
+                <span>{data.deliveryTimes} Days Delivery</span>
               </div>
               <div className="item">
                 <img src="/img/recycle.png" alt="" />
@@ -188,7 +186,9 @@ const Gig = () => {
                 </div>
               ))}
             </div>
-            <button>Continue</button>
+            <Link to={`/pay/${gigID}`}>
+              <button>Continue</button>
+            </Link>
           </div>
         </div>
       )}

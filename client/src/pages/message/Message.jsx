@@ -5,6 +5,7 @@ import newRequest from '../../utils/newRequest';
 import './Message.scss';
 const Message = () => {
   const { id } = useParams();
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['messages'],
@@ -15,15 +16,26 @@ const Message = () => {
   });
 
   const queryClient = useQueryClient();
+
   const mutation = useMutation({
-    mutationFn: (id) => {
-      return newRequest.put(`/conversations/${id}`);
+    mutationFn: (message) => {
+      return newRequest.post(`/messages`, message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['conversations']);
+      queryClient.invalidateQueries(['messages']);
     },
   });
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    const message = {
+      conversationID: id,
+      desc: e.target[0].value,
+    };
 
+    mutation.mutate(message);
+
+    e.target[0].value = ''; // clear textarea mỗi khi submit
+  };
 
   return (
     <div className="message">
@@ -38,7 +50,10 @@ const Message = () => {
           </span>
           <div className="m_messages">
             {data.map((m) => (
-              <div key={m._id} className="item as">
+              <div
+                key={m._id}
+                className={m.userID === currentUser._id ? 'item owner' : 'item'}
+              >
                 <img
                   src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
                   alt=""
@@ -48,10 +63,10 @@ const Message = () => {
             ))}
           </div>
           <hr />
-          <div className="write">
-            <textarea type="text" placeholder="write a message" />
-            <button>Send</button>
-          </div>
+          <form className="write" onSubmit={handelSubmit}>
+            <textarea type="text" placeholder="Write a message" />
+            <button type="submit">Send</button>
+          </form>
         </div>
       )}
     </div>

@@ -26,11 +26,11 @@
       
       tr {
         height: 100px;
-      
+        background-color: rgb(251, 251, 251);
         th {
           text-align: left;
           padding: 10px;
-         
+          background-color: white;
 
           &:nth-child(4) {
             width: 10%;
@@ -39,7 +39,7 @@
 
         td {
           padding: 10px;
-          background-color: rgb(251, 251, 251);
+        
           &:first-child {
             font-weight: 500;
           }
@@ -70,7 +70,7 @@
         }
 
         &.active {
-          background-color: #1dbf730f;
+          background-color: #1dbf730f !important;
         }
       }
     }

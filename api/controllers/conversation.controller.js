@@ -1,7 +1,9 @@
 import Conversation from "../models/conversation.model.js";
+import createError from "../utils/createError.js";
 export const getConversations = async (req, res, next) => {
     try {
-        const conversations = await Conversation.find(req.isSeller ? { sellerID: req.userID } : { buyerID: req.userID })
+        const conversations = await
+            Conversation.find(req.isSeller ? { sellerID: req.userID } : { buyerID: req.userID }).sort({ updatedAt: -1 })
         res.status(200).send(conversations)
 
     } catch (error) {
@@ -27,6 +29,7 @@ export const createConversation = async (req, res, next) => {
 export const getSingleConversations = async (req, res, next) => {
     try {
         const conversation = await Conversation.findOne({ id: req.params.id })
+        if (!conversation) return next(createError(404, 'Not found!'))
         res.status(200).send(conversation)
     } catch (error) {
         next(error)

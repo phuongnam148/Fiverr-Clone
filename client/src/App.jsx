@@ -8,11 +8,18 @@ import Gig from './pages/gig/Gig';
 import Add from './pages/add/Add';
 import Orders from './pages/orders/Orders';
 import MyGigs from './pages/myGigs/MyGigs';
-import Message from './pages/Message/Message';
+import Message from './pages/message/Message';
 import Messages from './pages/messages/Messages';
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import Pay from './pages/pay/Pay';
+import Success from './pages/success/Success';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
+
 
 const queryClient = new QueryClient();
 
@@ -42,7 +49,7 @@ const App = () => {
           element: <Gigs />,
         },
         {
-          path: '/gig/:id',
+          path: '/gig/:gigID',
           element: <Gig />,
         },
         {
@@ -72,6 +79,14 @@ const App = () => {
         {
           path: '/login',
           element: <Login />,
+        },
+        {
+          path: '/pay/:gigID',
+          element: <Pay />,
+        },
+        {
+          path: '/success',
+          element: <Success />,
         },
       ],
     },

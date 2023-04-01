@@ -35,7 +35,7 @@ const GigCard = ({ item }) => {
             </Link>
           )}
           <Link to={`/gig/${item._id}`}>
-            <p className="desc">{item.shortDesc}</p>
+            <p className="desc">{item.title}</p>
           </Link>
           <div className="star">
             <img src="./img/star.png" alt="" />
