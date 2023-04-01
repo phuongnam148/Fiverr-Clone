@@ -7,23 +7,27 @@
   /* font-family: 'Exo', sans-serif; */
   font-family: 'Montserrat', sans-serif;
 }
+
 body {
   background-color: #fff;
   /* color: #62646a; */
 
 }
-a{
+
+a {
   text-decoration: none;
   color: inherit;
 }
-.app{
+
+.app {
   position: relative;
 }
-.container{
+
+.container {
   margin: auto;
   width: 1400px;
 }
 
-.cp{
+.cp {
   cursor: pointer;
 }
