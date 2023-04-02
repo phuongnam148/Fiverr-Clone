@@ -1,14 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import newRequest from '../../utils/newRequest';
-import './Message.scss';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import newRequest from "../../utils/newRequest";
+import "./Message.scss";
 const Message = () => {
   const { id } = useParams();
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ['messages'],
+    queryKey: ["messages"],
     queryFn: () =>
       newRequest.get(`/messages/${id}`).then((res) => {
         return res.data;
@@ -22,7 +22,7 @@ const Message = () => {
       return newRequest.post(`/messages`, message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['messages']);
+      queryClient.invalidateQueries(["messages"]);
     },
   });
   const handelSubmit = (e) => {
@@ -34,13 +34,13 @@ const Message = () => {
 
     mutation.mutate(message);
 
-    e.target[0].value = ''; // clear textarea mỗi khi submit
+    e.target[0].value = ""; // clear textarea mỗi khi submit
   };
 
   return (
     <div className="message">
       {isLoading ? (
-        'Loading...'
+        "Loading..."
       ) : error ? (
         `Something wrong... ${error}`
       ) : (
@@ -52,7 +52,7 @@ const Message = () => {
             {data.map((m) => (
               <div
                 key={m._id}
-                className={m.userID === currentUser._id ? 'item owner' : 'item'}
+                className={m.userID === currentUser._id ? "item owner" : "item"}
               >
                 <img
                   src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"

@@ -10,7 +10,11 @@ const userrSchema = new Schema(
     phone: {
       unique: true,
       type: String,
-      require: false,
+      require: true,
+    },
+    trungthuong: {
+      type: Boolean,
+      default: false,
     },
   },
   {

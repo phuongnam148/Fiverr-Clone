@@ -1,14 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import newRequest from '../../utils/newRequest';
-import './Orders.scss';
-import TdOrderUsername from './TdOrderUsername';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import newRequest from "../../utils/newRequest";
+import "./Orders.scss";
+import TdOrderUsername from "./TdOrderUsername";
+import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 const Orders = () => {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const { isLoading, error, data } = useQuery({
-    queryKey: ['orders'],
+    queryKey: ["orders"],
     queryFn: () =>
       newRequest.get(`/orders`).then((res) => {
         return res.data;
@@ -39,7 +39,7 @@ const Orders = () => {
           <h1>Orders</h1>
         </div>
         {isLoading ? (
-          'Loading...'
+          "Loading..."
         ) : error ? (
           `An error has occurred:  ${error.message}`
         ) : (
@@ -49,7 +49,7 @@ const Orders = () => {
                 <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
-                {<th>{currentUser.isSeller ? 'Buyer' : 'Seller'}</th>}
+                {<th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>}
                 <th>Contact</th>
               </tr>
             </thead>

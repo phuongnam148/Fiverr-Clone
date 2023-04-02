@@ -32,31 +32,20 @@ const connect = async () => {
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3002",
+    origin: "http://localhost:5173",
   })
 );
 app.use(express.json());
 app.use(cookieParser());
 
-<<<<<<< Updated upstream
-
-app.use("/api/auth", authRouter)
-app.use("/api/users", userRouter)
-app.use("/api/gigs", gigRouter)
-app.use("/api/messages", messageRouter)
-app.use("/api/conversations", conversationRouter)
-app.use("/api/reviews", reviewRouter)
-app.use("/api/orders", orderRouter)
-=======
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/gigs", gigRouter);
-app.use("/api/message", messageRouter);
+app.use("/api/messages", messageRouter);
 app.use("/api/conversations", conversationRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/wheel", wheelRouter);
->>>>>>> Stashed changes
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
