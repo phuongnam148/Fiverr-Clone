@@ -6,8 +6,12 @@ export const deleteUser = async (req, res, next) => {
 };
 
 export const getUsers = async (req, res, next) => {
-  const user = await Userr.findById(req.params.id);
-  res.status(200).send(user);
+  try {
+    const user = await Userr.find();
+    res.status(200).send(user);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const addUser = async (req, res, next) => {
@@ -16,7 +20,7 @@ export const addUser = async (req, res, next) => {
       ...req.body,
     });
     await newUser.save();
-    res.status(201).send("User has been created");
+    res.status(201).send("add user success");
   } catch (error) {
     next(error);
   }
