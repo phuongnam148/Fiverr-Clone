@@ -48,6 +48,45 @@ export const cards = [
         img: "https://fiverr-res.cloudinary.com/q_auto,f_auto,w_255,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/illustration-2x.png",
     },
 ];
+export const category = [
+    {
+        id: 1,
+        title: "Graphics & Design",
+    },
+    {
+        id: 2,
+        title: "Digital Marketing",
+    },
+    {
+        id: 3,
+        title: "Writing & Translation",
+    },
+    {
+        id: 4,
+        title: "Video & Animation",
+    },
+    {
+        id: 5,
+        title: "Music & Audio",
+    },
+    {
+        id: 6,
+        title: "Programming & Tech",
+    },
+    {
+        id: 7,
+        title: "Photography",
+    },
+    {
+        id: 8,
+        title: "Business",
+    },
+    {
+        id: 9,
+        title: "Lifestyle",
+    },
+];
+
 
 export const projects = [
     {

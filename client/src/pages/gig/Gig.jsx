@@ -15,7 +15,7 @@ const Gig = () => {
   const { gigID } = useParams();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: [gigID],
+    queryKey: ['gig'],
     queryFn: () =>
       newRequest.get(`/gigs/single/${gigID}`).then((res) => {
         return res.data;
@@ -62,15 +62,15 @@ const Gig = () => {
                   alt=""
                 />
                 <span>{dataUser.username}</span>
-                {!isNaN(data.totalStars / data.starNumber) && (
+                {!isNaN(data.totalStars / (data.starNumber)) && (
                   <div className="stars">
-                    {Array(Math.round(data.totalStars / data.starNumber))
+                    {Array(Math.round(data.totalStars / (data.starNumber)))
                       .fill()
                       .map((item, index) => (
                         <img key={index} src="/img/star.png" alt="" />
                       ))}
 
-                    <span>{Math.round(data.totalStars / data.starNumber)}</span>
+                    <span>{Math.round(data.totalStars / (data.starNumber-1))}</span>
                   </div>
                 )}
               </div>

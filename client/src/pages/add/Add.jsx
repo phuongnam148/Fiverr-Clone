@@ -5,9 +5,10 @@ import upload from '../../utils/upload';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
+import { category } from '../../data';
+
 const Add = () => {
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (gig) => {
@@ -62,10 +63,10 @@ const Add = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(state);
-    alert("Add gig success")
+    alert('Add gig success');
     navigate('/mygigs');
   };
-  console.log(state)
+  console.log(state);
   return (
     <div className="add">
       <div className="container">
@@ -86,10 +87,11 @@ const Add = () => {
               onChange={handleChange}
               defaultValue="design"
             >
-              <option value="design">Design</option>
-              <option value="web">Web Development</option>
-              <option value="animation">Animation</option>
-              <option value="music">Music</option>
+              {category.map((c) => (
+                <option key={c} value={c.id}>
+                  {c.title}
+                </option>
+              ))}
             </select>
 
             <div className="images">

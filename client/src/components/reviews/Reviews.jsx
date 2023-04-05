@@ -17,7 +17,8 @@ const Reviews = ({ gigID }) => {
       return newRequest.post('/reviews', review);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['reviews']);
+      queryClient.invalidateQueries(['reviews','gig']);
+
     },
   });
   const handleSubmit = (e) => {

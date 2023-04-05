@@ -24,7 +24,7 @@ export const createReview = async (req, res, next) => {
 
             const savedReview = await newReview.save()
 
-            await Gig.findByIdAndUpdate(req.body.gidID, { $inc: { totalStarsL: req.body.star, starNumber: 1 } })
+            await Gig.findByIdAndUpdate(req.body.gigID, { $inc: { totalStars: req.body.star, starNumber: 1 } })
 
             res.status(201).send(savedReview)
 

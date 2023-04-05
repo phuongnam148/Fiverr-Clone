@@ -56,7 +56,7 @@ const gigSchema = new Schema({
     },
     starNumber: {
         type: Number,
-        default: 1,
+        default: 0,
     },
     sales: {
         type: Number,

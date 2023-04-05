@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Navbar.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
+import { category } from '../../data';
+
 const Navbar = () => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
@@ -85,42 +87,16 @@ const Navbar = () => {
         <>
           <hr />
           <div className="menu container">
-            <Link className="link menuLink" to="/">
-              Graphics & Design
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Video & Animation
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Writing & Translation
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              AI Services
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Digital Marketing
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Music & Audio
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Programming & Tech
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Business
-              <hr />
-            </Link>
-            <Link className="link menuLink" to="/">
-              Lifestyle
-              <hr />
-            </Link>
+            {category.map((c) => (
+              <Link
+                key={c.id}
+                className="link menuLink"
+                to={`/gigs?category=${c.id}`}
+              >
+                {c.title}
+                <hr />
+              </Link>
+            ))}
           </div>
           <hr />
         </>
