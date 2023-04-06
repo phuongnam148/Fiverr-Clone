@@ -1,13 +1,13 @@
-import React from 'react';
-import './MyGigs.scss';
-import { Link } from 'react-router-dom';
-import getCurrentUser from '../../utils/getCurrentUser';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import newRequest from '../../utils/newRequest';
+import React from "react";
+import "./MyGigs.scss";
+import { Link } from "react-router-dom";
+import getCurrentUser from "../../utils/getCurrentUser";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
 const myGIgs = () => {
   const currentUser = getCurrentUser();
   const { isLoading, error, data } = useQuery({
-    queryKey: ['myGigs'],
+    queryKey: ["myGigs"],
     queryFn: () =>
       newRequest.get(`/gigs?userID=${currentUser._id}`).then((res) => {
         return res.data;
@@ -20,21 +20,23 @@ const myGIgs = () => {
       return newRequest.delete(`/gigs/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['myGigs']);
+      queryClient.invalidateQueries(["myGigs"]);
     },
   });
 
-  const handleDelete = () => {};
+  const handleDelete = (id) => {
+    if (window.confirm("Delete gig?")) mutation.mutate(id);
+  };
   return (
     <div className="myGigs">
       {isLoading ? (
-        'Loading'
+        "Loading"
       ) : error ? (
         `Somthing wrong... ${error}`
       ) : (
         <div className="container">
           <div className="title">
-            <h1>{currentUser.isSeller ? 'Gigs' : 'Orders'}</h1>
+            <h1>{currentUser.isSeller ? "Gigs" : "Orders"}</h1>
             {currentUser.isSeller && (
               <Link to="/add">
                 <button>Add New Gig</button>
@@ -70,7 +72,12 @@ const myGIgs = () => {
                   <td>{item.price}</td>
                   <td>{item.sales}</td>
                   <td>
-                    <img className="delete" src="./img/delete.png" alt="" />
+                    <img
+                      className="delete"
+                      src="./img/delete.png"
+                      alt=""
+                      onClick={() => handleDelete(item._id)}
+                    />
                   </td>
                 </tr>
               ))}

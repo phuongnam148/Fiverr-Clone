@@ -1,14 +1,3 @@
-<<<<<<< Updated upstream
-import React, { useReducer, useState } from 'react';
-import './Add.scss';
-import { INITIAL_STATE, gigReducer } from '../../reducers/gigReducer';
-import upload from '../../utils/upload';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import newRequest from '../../utils/newRequest';
-import { category } from '../../data';
-
-=======
 import React, { useReducer, useState } from "react";
 import "./Add.scss";
 import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducer";
@@ -16,7 +5,8 @@ import upload from "../../utils/upload";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
->>>>>>> Stashed changes
+import { category } from "../../data";
+
 const Add = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -73,13 +63,8 @@ const Add = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(state);
-<<<<<<< Updated upstream
-    alert('Add gig success');
-    navigate('/mygigs');
-=======
     alert("Add gig success");
     navigate("/mygigs");
->>>>>>> Stashed changes
   };
   console.log(state);
   return (
@@ -127,6 +112,20 @@ const Add = () => {
               <button onClick={handleUpload}>
                 {uploading ? "Uploading" : "Upload"}
               </button>
+              <div className="addedImage">
+                {state?.images?.map((f, index) => (
+                  <div className="item" key={index}>
+                    <button
+                      onClick={() =>
+                        dispatch({ type: "REMOVE_IMAGE", payload: f })
+                      }
+                    >
+                      <img src={f} alt="" />
+                      <span>X</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
             <label htmlFor="">Description</label>
             <textarea
