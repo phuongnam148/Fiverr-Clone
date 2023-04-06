@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import upload from '../../utils/upload';
-import newRequest from '../../utils/newRequest';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import upload from "../../utils/upload";
+import newRequest from "../../utils/newRequest";
+import { useNavigate } from "react-router-dom";
 
-import './Register.scss';
+import "./Register.scss";
 const Register = () => {
   const [file, setFile] = useState(null);
   const [user, setUser] = useState({
-    username: '',
-    email: '',
-    img: '',
-    country: '',
+    username: "",
+    email: "",
+    img: "",
+    country: "",
     isSeller: false,
-    desc: '',
+    desc: "",
   });
   const navigate = useNavigate();
   const handelChange = (e) => {
@@ -31,12 +31,12 @@ const Register = () => {
     e.preventDefault();
     const url = await upload(file);
     try {
-      await newRequest.post('/auth/register', {
+      await newRequest.post("/auth/register", {
         ...user,
         img: url,
       });
       // console.log("ok");
-      navigate("/")
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

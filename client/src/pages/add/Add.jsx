@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useReducer, useState } from 'react';
 import './Add.scss';
 import { INITIAL_STATE, gigReducer } from '../../reducers/gigReducer';
@@ -7,6 +8,15 @@ import { useNavigate } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import { category } from '../../data';
 
+=======
+import React, { useReducer, useState } from "react";
+import "./Add.scss";
+import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducer";
+import upload from "../../utils/upload";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import newRequest from "../../utils/newRequest";
+>>>>>>> Stashed changes
 const Add = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -15,7 +25,7 @@ const Add = () => {
       return newRequest.post(`/gigs`, gig);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['myGigs']);
+      queryClient.invalidateQueries(["myGigs"]);
     },
   });
 
@@ -27,24 +37,24 @@ const Add = () => {
 
   const handleChange = (e) => {
     dispatch({
-      type: 'CHANGE_INPUT',
+      type: "CHANGE_INPUT",
       payload: { name: e.target.name, value: e.target.value },
     });
   };
   const handleFeature = (e) => {
     e.preventDefault();
     dispatch({
-      type: 'ADD_FEATURE',
+      type: "ADD_FEATURE",
       payload: e.target[0].value,
     });
-    e.target[0].value = '';
+    e.target[0].value = "";
   };
 
   const handleUpload = async () => {
     setUploading(true);
     try {
       const cover = await upload(singleFile);
-      console.log('cover:' + cover);
+      console.log("cover:" + cover);
       const images = await Promise.all(
         [...files].map(async (file) => {
           // files là 1 file list, ko phải array nên phải dùng [...files]
@@ -54,7 +64,7 @@ const Add = () => {
       );
 
       setUploading(false);
-      dispatch({ type: 'ADD_IMAGES', payload: { cover, images } });
+      dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
     } catch (error) {
       console.log(error);
     }
@@ -63,8 +73,13 @@ const Add = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(state);
+<<<<<<< Updated upstream
     alert('Add gig success');
     navigate('/mygigs');
+=======
+    alert("Add gig success");
+    navigate("/mygigs");
+>>>>>>> Stashed changes
   };
   console.log(state);
   return (
@@ -110,7 +125,7 @@ const Add = () => {
                 />
               </div>
               <button onClick={handleUpload}>
-                {uploading ? 'Uploading' : 'Upload'}
+                {uploading ? "Uploading" : "Upload"}
               </button>
             </div>
             <label htmlFor="">Description</label>
@@ -162,7 +177,7 @@ const Add = () => {
                 <div className="item" key={index}>
                   <button
                     onClick={() =>
-                      dispatch({ type: 'REMOVE_FEATURE', payload: f })
+                      dispatch({ type: "REMOVE_FEATURE", payload: f })
                     }
                   >
                     {f}

@@ -5,6 +5,29 @@ export const deleteUser = async (req, res, next) => {
   res.status(200).send("deleted!");
 };
 
+export const updateTrungThuong = async (req, res, next) => {
+  await Userr.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        trungthuong: true,
+      },
+    }
+  ),
+    res.status(200).send("updated!");
+};
+export const updateTrungThuongFalse = async (req, res, next) => {
+  await Userr.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        trungthuong: false,
+      },
+    }
+  ),
+    res.status(200).send("updated!");
+};
+
 export const getUsers = async (req, res, next) => {
   try {
     const user = await Userr.find();
