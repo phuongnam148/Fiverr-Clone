@@ -1,27 +1,30 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
-import 'swiper/css';
+import React from "react";
+import "swiper/css";
 
-import 'swiper/css/navigation';
+import "swiper/css/navigation";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
-import './Gig.scss';
-import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
-import newRequest from '../../utils/newRequest';
-import Reviews from '../../components/reviews/Reviews';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
+import "./Gig.scss";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import newRequest from "../../utils/newRequest";
+import Reviews from "../../components/reviews/Reviews";
+import getCurrentUser from "../../utils/getCurrentUser";
 const Gig = () => {
+  const navigate = useNavigate();
+
   const { gigID } = useParams();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ['gig'],
+    queryKey: ["gig"],
     queryFn: () =>
       newRequest.get(`/gigs/single/${gigID}`).then((res) => {
         return res.data;
       }),
   });
-
+  const currentUser = getCurrentUser();
   const userId = data?.userID;
 
   const {
@@ -36,41 +39,59 @@ const Gig = () => {
       }),
     enabled: !!userId, // ko có user id sẽ ko chạy hàm này
   });
+
+  const handelContinue = () => {
+    if (!currentUser) return alert("You must login before order gig");
+    if (currentUser?.isSeller) return alert("Seller can't order gig");
+
+    navigate(`/pay/${gigID}`);
+  };
+
+  const handelContact = () => {
+    if (!currentUser) return alert("You must login before contact seller");
+    if (currentUser?.isSeller)
+      return alert("Seller can't contact to other seller");
+
+    navigate(`/pay/${gigID}`);
+  };
+
   return (
     <div className="gig">
       {isLoading ? (
-        'Loading...'
+        "Loading..."
       ) : error ? (
-        'Something wrong...'
+        "Something wrong..."
       ) : (
         <div className="container">
           <div className="left">
             <span className="breadcrumbs">Fiverr / Graphics & Design </span>
             <h1>{data.title}</h1>
             {isLoadingUser ? (
-              'Loading...'
+              "Loading..."
             ) : errorUser ? (
-              'Something wrong...'
+              "Something wrong..."
             ) : (
               <div className="user">
                 <img
                   className="pp"
                   src={
                     dataUser.img ||
-                    'https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600'
+                    "https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
                   }
                   alt=""
                 />
                 <span>{dataUser.username}</span>
-                {!isNaN(data.totalStars / (data.starNumber)) && (
+                {!isNaN(data.totalStars / data.starNumber) && (
                   <div className="stars">
-                    {Array(Math.round(data.totalStars / (data.starNumber)))
+                    {Array(Math.round(data.totalStars / data.starNumber))
                       .fill()
                       .map((item, index) => (
                         <img key={index} src="/img/star.png" alt="" />
                       ))}
 
-                    <span>{Math.round(data.totalStars / (data.starNumber-1))}</span>
+                    <span>
+                      {Math.round(data.totalStars / (data.starNumber - 1))}
+                    </span>
                   </div>
                 )}
               </div>
@@ -82,11 +103,8 @@ const Gig = () => {
               modules={[Navigation]}
               className="slider"
             >
-              <SwiperSlide>
-                <img src={data.cover} alt="" />
-              </SwiperSlide>
               {data.images &&
-                data.images.map((image,index) => (
+                data.images.map((image, index) => (
                   <SwiperSlide key={index}>
                     <img src={image} alt="" />
                   </SwiperSlide>
@@ -96,39 +114,42 @@ const Gig = () => {
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
             {isLoadingUser ? (
-              'Loading'
+              "Loading"
             ) : errorUser ? (
-              'Something wrong...'
+              "Something wrong..."
             ) : (
               <div className="seller">
                 <h2>About The Seller</h2>
                 {isLoadingUser ? (
-                  'Loading...'
+                  "Loading..."
                 ) : errorUser ? (
-                  'Something wrong...'
+                  "Something wrong..."
                 ) : (
                   <div className="user">
                     <img
                       className="pp"
                       src={
                         dataUser.img ||
-                        'https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600'
+                        "https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
                       }
                       alt=""
                     />
                     <div className="info">
                       <span>{dataUser.username}</span>
                       <div className="stars">
-                        {Array(Math.round(data.totalStars / data.starNumber))
-                          .fill()
-                          .map((item, index) => (
-                            <img key={index} src="/img/star.png" alt="" />
-                          ))}
+                        {!isNaN(data.totalStars / data.starNumber) &&
+                          Array(Math.round(data.totalStars / data.starNumber))
+                            .fill()
+                            .map((item, index) => (
+                              <img key={index} src="/img/star.png" alt="" />
+                            ))}
                         <span>
-                          {Math.round(data.totalStars / data.starNumber)}
+                          {isNaN(data.totalStars / data.starNumber)
+                            ? "0"
+                            : Math.round(data.totalStars / data.starNumber)}
                         </span>
                       </div>
-                      <button>Contact Me</button>
+                      <button onClick={handelContact}>Contact Me</button>
                     </div>
                   </div>
                 )}
@@ -186,9 +207,8 @@ const Gig = () => {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${gigID}`}>
-              <button>Continue</button>
-            </Link>
+
+            <button onClick={handelContinue}>Continue</button>
           </div>
         </div>
       )}

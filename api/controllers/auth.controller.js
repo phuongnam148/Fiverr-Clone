@@ -32,7 +32,7 @@ export const login = async (req, res, next) => {
         isSeller: user.isSeller,
       },
       process.env.JWT_KEY,
-      { expiresIn: 60 * 60 }
+      { expiresIn: "3h" }
     ); // secret key trong file env
 
     const { _id, isSeller, ...info } = user._doc;

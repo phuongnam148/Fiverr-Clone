@@ -16,12 +16,18 @@ const Add = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myGigs"]);
+      alert("Add gig success");
+      navigate("/mygigs");
+    },
+    onError: (error) => {
+      // An error happened!
+      alert(error.response.data);
     },
   });
 
-  const [singleFile, setSingleFile] = useState(undefined);
-  const [files, setFiles] = useState([]);
-  const [uploading, setUploading] = useState(false);
+  // const [singleFile, setSingleFile] = useState(undefined);
+  // const [files, setFiles] = useState([]);
+  // const [uploading, setUploading] = useState(false);
 
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
 
@@ -39,32 +45,45 @@ const Add = () => {
     });
     e.target[0].value = "";
   };
-
-  const handleUpload = async () => {
-    setUploading(true);
-    try {
-      const cover = await upload(singleFile);
-      console.log("cover:" + cover);
-      const images = await Promise.all(
-        [...files].map(async (file) => {
-          // files là 1 file list, ko phải array nên phải dùng [...files]
-          const url = await upload(file);
-          return url;
-        })
-      );
-
-      setUploading(false);
-      dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
-    } catch (error) {
-      console.log(error);
-    }
+  const handleImages = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "ADD_IMAGES",
+      payload: e.target[0].value,
+    });
+    e.target[0].value = "";
   };
+  const handleCover = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "ADD_COVER",
+      payload: e.target[0].value,
+    });
+    e.target[0].value = "";
+  };
+  // const handleUpload = async () => {
+  //   setUploading(true);
+  //   try {
+  //     const cover = await upload(singleFile);
+  //     // console.log("cover:" + cover);
+  //     const images = await Promise.all(
+  //       [...files].map(async (file) => {
+  //         // files là 1 file list, ko phải array nên phải dùng [...files]
+  //         const url = await upload(file);
+  //         return url;
+  //       })
+  //     );
 
-  const handleSubmit = (e) => {
+  //     setUploading(false);
+  //     dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     mutation.mutate(state);
-    alert("Add gig success");
-    navigate("/mygigs");
   };
   console.log(state);
   return (
@@ -88,15 +107,51 @@ const Add = () => {
               defaultValue="design"
             >
               {category.map((c) => (
-                <option key={c} value={c.id}>
+                <option key={c.id} value={c.id}>
                   {c.title}
                 </option>
               ))}
             </select>
 
-            <div className="images">
+            <label>Cover Image</label>
+            <form className="addForm" onSubmit={handleCover}>
+              <input type="text" placeholder="Cover Image URL" />
+              <button type="submit">Add</button>
+            </form>
+            <div className="addedFeatures">
+              {state.cover ? (
+                <img
+                  src={state.cover}
+                  alt=""
+                  onClick={() =>
+                    dispatch({ type: "REMOVE_COVER", payload: state.cover })
+                  }
+                />
+              ) : (
+                ""
+              )}
+            </div>
+            <label>Gig Images</label>
+            <form className="addForm" onSubmit={handleImages}>
+              <input type="text" placeholder="Image URL" />
+              <button type="submit">Add</button>
+            </form>
+            <div className="addedFeatures">
+              {state?.images?.map((f, index) => (
+                <div className="item" key={index}>
+                  <img
+                    src={f}
+                    alt=""
+                    onClick={() =>
+                      dispatch({ type: "REMOVE_IMAGE", payload: f })
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+            {/* <div className="images">
               <div className="imagesInputs">
-                <label htmlFor="">Cover Image</label>
+              <label htmlFor="">Cover Image</label>
                 <input
                   type="file"
                   onChange={(e) => setSingleFile(e.target.files[0])}
@@ -126,7 +181,7 @@ const Add = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
             <label htmlFor="">Description</label>
             <textarea
               id=""

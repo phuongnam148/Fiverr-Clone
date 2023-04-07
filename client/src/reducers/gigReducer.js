@@ -20,11 +20,15 @@ export const gigReducer = (state, action) => {
         ...state,
         [action.payload.name]: action.payload.value,
       };
+    case "ADD_COVER":
+      return {
+        ...state,
+        cover: action.payload,
+      };
     case "ADD_IMAGES":
       return {
         ...state,
-        cover: action.payload.cover,
-        images: action.payload.images,
+        images: [...state.images, action.payload],
       };
     case "ADD_FEATURE":
       return {
@@ -42,6 +46,11 @@ export const gigReducer = (state, action) => {
       return {
         ...state,
         images: state.images.filter((feature) => feature !== action.payload), // giữ lại tất cả feature trừ  action.payload
+      };
+    case "REMOVE_COVER":
+      return {
+        ...state,
+        cover: "",
       };
     default:
       return state;

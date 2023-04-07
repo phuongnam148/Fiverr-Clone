@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './Navbar.scss';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import newRequest from '../../utils/newRequest';
-import { category } from '../../data';
+import React, { useEffect, useState } from "react";
+import "./Navbar.scss";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import newRequest from "../../utils/newRequest";
+import { category } from "../../data";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -14,28 +14,28 @@ const Navbar = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
   };
   useEffect(() => {
-    window.addEventListener('scroll', idActive);
+    window.addEventListener("scroll", idActive);
 
     return () => {
-      window.removeEventListener('scroll', idActive);
+      window.removeEventListener("scroll", idActive);
     };
   }, []);
 
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
 
   const handelLogout = async () => {
     try {
-      await newRequest.post('/auth/logout');
-      localStorage.setItem('currentUser', null);
-      navigate('/');
+      await newRequest.post("/auth/logout");
+      localStorage.setItem("currentUser", null);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className={active || pathname !== '/' ? 'navbar active' : 'navbar'}>
+    <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
           <Link to="/">
@@ -60,7 +60,7 @@ const Navbar = () => {
               <img
                 src={
                   currentUser.img ||
-                  'https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600'
+                  "https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
                 }
                 alt=""
               />
@@ -83,7 +83,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {(active || pathname !== '/') && (
+      {(active || pathname !== "/") && (
         <>
           <hr />
           <div className="menu container">

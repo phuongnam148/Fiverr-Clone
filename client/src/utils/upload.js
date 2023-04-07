@@ -15,5 +15,5 @@ const upload = async (file) => {
     console.log(error);
   }
 };
-const destroy = async (url) => {};
+
 export default upload;

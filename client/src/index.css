@@ -31,3 +31,7 @@ a {
 .cp {
   cursor: pointer;
 }
+
+button {
+  cursor: pointer;
+}

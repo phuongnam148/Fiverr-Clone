@@ -1,19 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import GigCard from '../../components/gigCard/GigCard';
-import newRequest from '../../utils/newRequest';
-import './Gigs.scss';
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import GigCard from "../../components/gigCard/GigCard";
+import newRequest from "../../utils/newRequest";
+import "./Gigs.scss";
+import { category, cards } from "../../data";
 const Gigs = () => {
-  const [sort, setSort] = useState('sales');
+  const [sort, setSort] = useState("createdAt");
   const [open, setOpen] = useState(false);
   const minRef = useRef(0);
   const maxRef = useRef(1000);
 
   const { search } = useLocation();
-
+  const cateID = search.substr(-1);
+  // console.log(cateID);
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['gigs'],
+    queryKey: ["gigs"],
     queryFn: () =>
       newRequest
         .get(
@@ -24,7 +26,9 @@ const Gigs = () => {
         }),
   });
 
-  // console.log(data);
+  useEffect(() => {
+    refetch();
+  }, [search]);
 
   const reSort = (type) => {
     setSort(type);
@@ -41,8 +45,8 @@ const Gigs = () => {
   return (
     <div className="gigs">
       <div className="container">
-        <span className="breadcrumbs">Home / Graphics & Design</span>
-        <h1>AI Artists</h1>
+        <span className="breadcrumbs">Home / {category[cateID - 1].title}</span>
+        <h1>{cards[cateID - 1].title}</h1>
         <p>
           Explore the boundaries of art and technology with Fiverr{"'"}s AI
           artists
@@ -57,29 +61,29 @@ const Gigs = () => {
           <div className="right">
             <span className="sortBy">Sort by</span>
             <span className="sortType">
-              {sort === 'sales' && 'Best Selling'}
-              {sort === 'price' && 'Price'}
-              {sort === 'createdAt' && 'Newest'}
+              {sort === "sales" && "Best Selling"}
+              {sort === "price" && "Price"}
+              {sort === "createdAt" && "Newest"}
             </span>
             <img src="./img/down.png" alt="" onClick={() => setOpen(!open)} />
             {open && (
               <div className="rightMenu">
-                {sort === 'sales' && (
+                {sort === "sales" && (
                   <>
-                    <span onClick={() => reSort('createdAt')}>Newest</span>
-                    <span onClick={() => reSort('price')}>Price</span>
+                    <span onClick={() => reSort("createdAt")}>Newest</span>
+                    <span onClick={() => reSort("price")}>Price</span>
                   </>
                 )}
-                {sort === 'price' && (
+                {sort === "price" && (
                   <>
-                    <span onClick={() => reSort('sales')}>Best Selling</span>
-                    <span onClick={() => reSort('createdAt')}>Newest</span>
+                    <span onClick={() => reSort("sales")}>Best Selling</span>
+                    <span onClick={() => reSort("createdAt")}>Newest</span>
                   </>
                 )}
-                {sort === 'createdAt' && (
+                {sort === "createdAt" && (
                   <>
-                    <span onClick={() => reSort('price')}>Price</span>
-                    <span onClick={() => reSort('sales')}>Best Selling</span>
+                    <span onClick={() => reSort("price")}>Price</span>
+                    <span onClick={() => reSort("sales")}>Best Selling</span>
                   </>
                 )}
               </div>
@@ -88,9 +92,9 @@ const Gigs = () => {
         </div>
         <div className="cards">
           {isLoading
-            ? 'loading'
+            ? "loading"
             : error
-            ? 'Something went wrong...'
+            ? "Something went wrong..."
             : data.length > 0 &&
               data.map((gig) => <GigCard key={gig._id} item={gig} />)}
         </div>

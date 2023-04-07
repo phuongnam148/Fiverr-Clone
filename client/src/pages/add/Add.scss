@@ -12,7 +12,28 @@
 
       font-weight: 300;
     }
-
+    .addedFeatures {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      button {
+        padding: 10px !important;
+        height: 30px !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        background: transparent !important;
+        color: red !important;
+        border: 1px solid red !important;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      img{
+        max-width: 80px;
+        max-height: 50px;
+        cursor: pointer;
+      }
+    }
     .sections {
       display: flex;
       justify-content: space-between;
@@ -68,22 +89,7 @@
           }
         }
 
-        .addedFeatures {
-          display: flex;
-          gap: 20px;
-
-          button {
-            height: 30px;
-            font-size: 12px;
-            font-weight: 400;
-            background: transparent;
-            color: red;
-            border: 1px solid red;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-          }
-        }
+       
       }
     }
   }
