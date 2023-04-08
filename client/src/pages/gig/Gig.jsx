@@ -47,12 +47,25 @@ const Gig = () => {
     navigate(`/pay/${gigID}`);
   };
 
-  const handelContact = () => {
+  const handelContact = async (sellerID) => {
     if (!currentUser) return alert("You must login before contact seller");
     if (currentUser?.isSeller)
       return alert("Seller can't contact to other seller");
 
+    const buyerID = currentUser._id;
+    const id = sellerID + buyerID;
 
+    try {
+      const res = await newRequest.get(`/conversations/single/${id}`);
+      navigate(`/message/${res.data.id}`);
+    } catch (error) {
+      if (error.response.status === 404) {
+        const res = await newRequest.post(`/conversations`, {
+          to: currentUser.isSeller ? buyerID : sellerID,
+        });
+        navigate(`/message/${res.data.id}`);
+      }
+    }
   };
 
   return (
@@ -149,7 +162,9 @@ const Gig = () => {
                             : Math.round(data.totalStars / data.starNumber)}
                         </span>
                       </div>
-                      <button onClick={handelContact}>Contact Me</button>
+                      <button onClick={() => handelContact(dataUser._id)}>
+                        Contact Me
+                      </button>
                     </div>
                   </div>
                 )}

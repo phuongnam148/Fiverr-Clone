@@ -6,7 +6,7 @@ import "./Message.scss";
 const Message = () => {
   const { id } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
+  const sellerID = id.split(currentUser._id);
   const { isLoading, error, data } = useQuery({
     queryKey: ["messages"],
     queryFn: () =>
@@ -14,6 +14,17 @@ const Message = () => {
         return res.data;
       }),
   });
+  // const {
+  //   isLoading: isLoadingSeller,
+  //   error: errorSeller,
+  //   data: dataSeller,
+  // } = useQuery({
+  //   queryKey: ["Seller"],
+  //   queryFn: () =>
+  //     newRequest.get(`/users/${sellerID}`).then((res) => {
+  //       return res.data;
+  //     }),
+  // });
 
   const queryClient = useQueryClient();
 
@@ -36,7 +47,6 @@ const Message = () => {
 
     e.target[0].value = ""; // clear textarea mỗi khi submit
   };
-
   return (
     <div className="message">
       {isLoading ? (
@@ -46,7 +56,9 @@ const Message = () => {
       ) : (
         <div className="container">
           <span className="breadcrumbs">
-            <Link to="/messages">Messages</Link> / John Doe
+            <>
+              <Link to="/messages">Messages</Link> /
+            </>
           </span>
           <div className="m_messages">
             {data.map((m) => (
