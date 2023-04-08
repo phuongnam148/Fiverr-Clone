@@ -1,44 +1,42 @@
-import React, { useEffect } from "react";
-import Navbar from "./components/navbar/Navbar";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Footer from "./components/footer/Footer";
-import Home from "./pages/home/Home";
-import Gigs from "./pages/gigs/Gigs";
-import Gig from "./pages/gig/Gig";
-import Add from "./pages/add/Add";
-import Orders from "./pages/orders/Orders";
-import MyGigs from "./pages/myGigs/MyGigs";
-import Message from "./pages/message/Message";
-import Messages from "./pages/messages/Messages";
-import Register from "./pages/register/Register";
-import Login from "./pages/login/Login";
-import Pay from "./pages/pay/Pay";
-import Success from "./pages/success/Success";
-import Cookies from "js-cookie";
+import React, { useEffect } from 'react';
+import Navbar from './components/navbar/Navbar';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import Footer from './components/footer/Footer';
+import Home from './pages/home/Home';
+import Gigs from './pages/gigs/Gigs';
+import Gig from './pages/gig/Gig';
+import Add from './pages/add/Add';
+import Orders from './pages/orders/Orders';
+import MyGigs from './pages/myGigs/MyGigs';
+import Message from './pages/message/Message';
+import Messages from './pages/messages/Messages';
+import Register from './pages/register/Register';
+import Login from './pages/login/Login';
+import Pay from './pages/pay/Pay';
+import Success from './pages/success/Success';
+import Cookies from 'js-cookie';
 import {
   QueryClient,
   QueryClientProvider,
   useQuery,
-} from "@tanstack/react-query";
-import newRequest from "./utils/newRequest";
+} from '@tanstack/react-query';
+import newRequest from './utils/newRequest';
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  const checkUser = async () => {
+    try {
+      await newRequest.get('/users');
+      // navigate('/');
+    } catch (error) {
+      localStorage.setItem('currentUser', null);
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const checkCookie = async () => {
-      const myCookie = Cookies.get("accessToken");
-      if (!myCookie) {
-        try {
-          await newRequest.post("/auth/logout");
-          localStorage.setItem("currentUser", null);
-          // navigate('/');
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    checkCookie();
+    checkUser();
   }, []);
 
   const Layout = () => {
@@ -54,55 +52,55 @@ const App = () => {
   };
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <Layout />,
       children: [
         {
-          path: "/",
+          path: '/',
           element: <Home />,
         },
         {
-          path: "/gigs",
+          path: '/gigs',
           element: <Gigs />,
         },
         {
-          path: "/gig/:gigID",
+          path: '/gig/:gigID',
           element: <Gig />,
         },
         {
-          path: "/orders",
+          path: '/orders',
           element: <Orders />,
         },
         {
-          path: "/mygigs",
+          path: '/mygigs',
           element: <MyGigs />,
         },
         {
-          path: "/add",
+          path: '/add',
           element: <Add />,
         },
         {
-          path: "/messages",
+          path: '/messages',
           element: <Messages />,
         },
         {
-          path: "/message/:id",
+          path: '/message/:id',
           element: <Message />,
         },
         {
-          path: "/register",
+          path: '/register',
           element: <Register />,
         },
         {
-          path: "/login",
+          path: '/login',
           element: <Login />,
         },
         {
-          path: "/pay/:gigID",
+          path: '/pay/:gigID',
           element: <Pay />,
         },
         {
-          path: "/success",
+          path: '/success',
           element: <Success />,
         },
       ],

@@ -35,3 +35,7 @@ a {
 button {
   cursor: pointer;
 }
+
+.hover_btn:hover{
+  background: #19a463 !important;
+}

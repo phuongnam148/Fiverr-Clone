@@ -32,18 +32,21 @@ export const login = async (req, res, next) => {
         isSeller: user.isSeller,
       },
       process.env.JWT_KEY,
-      { expiresIn: "3h" }
+      { expiresIn: "3hr" }
     ); // secret key trong file env
 
-    const { _id, isSeller, ...info } = user._doc;
+    const { _id, isSeller, img } = user._doc;
 
+    // gửi 1 cookie lúc login
     res
       .cookie("accessToken", token, {
-        // gửi 1 cookie lúc login
-        httpOnly: true,
+        path: '/',
+        expires: new Date(Date.now() + 1000 * 60 * 3),
+        httpOnly: true,      // cookie nay chi đc truy cap boi server
+        sameSite: 'lax'
       })
       .status(200)
-      .send({ _id, isSeller });
+      .send({ _id, isSeller, img });
   } catch (error) {
     next(error);
   }

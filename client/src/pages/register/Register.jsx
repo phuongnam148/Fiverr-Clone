@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import upload from "../../utils/upload";
-import newRequest from "../../utils/newRequest";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import upload from '../../utils/upload';
+import newRequest from '../../utils/newRequest';
+import { useNavigate } from 'react-router-dom';
 
-import "./Register.scss";
+import './Register.scss';
 const Register = () => {
   const [file, setFile] = useState(null);
   const [user, setUser] = useState({
-    username: "",
-    email: "",
-    img: "",
-    country: "",
+    username: '',
+    email: '',
+    password: '',
+    cfm_password: '',
+    img: '',
+    country: '',
     isSeller: false,
-    desc: "",
+    desc: '',
   });
   const navigate = useNavigate();
   const handelChange = (e) => {
@@ -30,15 +32,24 @@ const Register = () => {
   const handelSubmit = async (e) => {
     e.preventDefault();
     const url = await upload(file);
+
+    if (user.password !== user.cfm_password)
+      return alert("Retype password doesn't match!! ");
+    const { cfm_password, ...newUser } = user;
     try {
-      await newRequest.post("/auth/register", {
-        ...user,
+      await newRequest.post('/auth/register', {
+        ...newUser,
         img: url,
       });
+      alert('Sign up success!');
+      const { username, password } = user;
+      const res = await newRequest.post('/auth/login', { username, password });
+      localStorage.setItem('currentUser', JSON.stringify(res.data));
       // console.log("ok");
-      navigate("/");
+      navigate('/');
     } catch (error) {
       console.log(error);
+      if (error.response.status === 500) alert('Email or Username already exists');
     }
   };
   return (
@@ -52,6 +63,7 @@ const Register = () => {
             type="text"
             placeholder="Enter your username"
             onChange={handelChange}
+            required
           />
           <label htmlFor="">Email</label>
           <input
@@ -59,19 +71,28 @@ const Register = () => {
             type="email"
             placeholder="Enter your email"
             onChange={handelChange}
+            required
           />
           <label htmlFor="">Password</label>
-          <input name="password" type="password" onChange={handelChange} />
+          <input
+            name="password"
+            type="password"
+            onChange={handelChange}
+            required
+          />
+          <label htmlFor="">Retype Password</label>
+          <input
+            name="cfm_password"
+            type="password"
+            onChange={handelChange}
+            required
+          />
           <label htmlFor="">Profile Picture</label>
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-          <label htmlFor="">Country</label>
-          <input
-            name="country"
-            type="text"
-            placeholder="Usa"
-            onChange={handelChange}
-          />
-          <button type="submit">Register</button>
+
+          <button type="submit" className="hover_btn">
+            Register
+          </button>
         </div>
         <div className="right">
           <h1>I want to become a seller</h1>
@@ -85,9 +106,19 @@ const Register = () => {
           <label htmlFor="">Phone Number</label>
           <input
             name="phone"
-            type="text"
+            type="tel"
             placeholder="+1 234 567 89"
             onChange={handelChange}
+            pattern="[0-9]"
+            required
+          />
+          <label htmlFor="">Country</label>
+          <input
+            name="country"
+            type="text"
+            placeholder="Usa"
+            onChange={handelChange}
+            required
           />
           <label htmlFor="">Description</label>
           <textarea
