@@ -27,7 +27,7 @@ const GigCard = ({ item }) => {
               <img
                 src={
                   data.img ||
-                  'https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600'
+                  'https://www.brightlands.com/sites/default/files/2019-12/No%20avater.jpg'
                 }
                 alt=""
               />

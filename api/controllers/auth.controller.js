@@ -17,10 +17,11 @@ export const register = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
   try {
+    //check user 
     const user = await User.findOne({ username: req.body.username });
 
     if (!user) return next(createError(404, "User not found..."));
-
+    //check password
     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
     if (!isCorrect)
       return next(createError(400, "Wrong password or username ..."));
@@ -32,21 +33,21 @@ export const login = async (req, res, next) => {
         isSeller: user.isSeller,
       },
       process.env.JWT_KEY,
-      { expiresIn: "3hr" }
+      { expiresIn: "1d" }
     ); // secret key trong file env
 
-    const { _id, isSeller, img } = user._doc;
+    const { _id, isSeller, img, username } = user._doc;
 
     // gửi 1 cookie lúc login
     res
       .cookie("accessToken", token, {
         path: '/',
-        expires: new Date(Date.now() + 1000 * 60 * 3),
+        expires: new Date(Date.now() + (1000 * 60 * 60 * 24)),
         httpOnly: true,      // cookie nay chi đc truy cap boi server
         sameSite: 'lax'
       })
       .status(200)
-      .send({ _id, isSeller, img });
+      .send({ _id, isSeller, img,username });
   } catch (error) {
     next(error);
   }

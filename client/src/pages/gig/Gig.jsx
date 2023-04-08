@@ -52,7 +52,7 @@ const Gig = () => {
     if (currentUser?.isSeller)
       return alert("Seller can't contact to other seller");
 
-    navigate(`/pay/${gigID}`);
+
   };
 
   return (
@@ -76,7 +76,7 @@ const Gig = () => {
                   className="pp"
                   src={
                     dataUser.img ||
-                    "https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                    "https://www.brightlands.com/sites/default/files/2019-12/No%20avater.jpg"
                   }
                   alt=""
                 />
@@ -130,7 +130,7 @@ const Gig = () => {
                       className="pp"
                       src={
                         dataUser.img ||
-                        "https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                        "https://www.brightlands.com/sites/default/files/2019-12/No%20avater.jpg"
                       }
                       alt=""
                     />

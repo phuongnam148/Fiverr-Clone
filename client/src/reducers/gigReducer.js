@@ -1,7 +1,7 @@
 export const INITIAL_STATE = {
   userID: JSON.parse(localStorage.getItem("currentUser"))?._id,
   title: "",
-  category: "",
+  category: "1",
   cover: "",
   images: [],
   desc: "",

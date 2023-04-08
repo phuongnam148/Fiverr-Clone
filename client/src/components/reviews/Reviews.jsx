@@ -17,14 +17,17 @@ const Reviews = ({ gigID }) => {
       return newRequest.post('/reviews', review);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['reviews','gig']);
-
+      queryClient.invalidateQueries(['reviews', 'gig']);
     },
+    onError: (err) =>{
+      alert(err.response.data)
+    }
   });
   const handleSubmit = (e) => {
     e.preventDefault();
     const desc = e.target[0].value;
     const star = e.target[1].value;
+
     mutation.mutate({ gigID, desc, star });
   };
   return (

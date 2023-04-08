@@ -21,13 +21,15 @@ import {
   useQuery,
 } from '@tanstack/react-query';
 import newRequest from './utils/newRequest';
+import Profile from './pages/profile/Profile';
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const checkUser = async () => {
     try {
-      await newRequest.get('/users');
+      const res = await newRequest.get('/users');
+      localStorage.setItem('currentUser', JSON.stringify(res.data));
       // navigate('/');
     } catch (error) {
       localStorage.setItem('currentUser', null);
@@ -102,6 +104,10 @@ const App = () => {
         {
           path: '/success',
           element: <Success />,
+        },
+        {
+          path: '/profile',
+          element: <Profile />,
         },
       ],
     },

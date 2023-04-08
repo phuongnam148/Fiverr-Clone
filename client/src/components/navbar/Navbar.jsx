@@ -67,6 +67,7 @@ const Navbar = () => {
               <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
+                  <Link to="/profile">Profile</Link>
                   {currentUser?.isSeller && (
                     <>
                       <Link to="/mygigs">Gigs</Link>

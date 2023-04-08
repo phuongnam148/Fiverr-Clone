@@ -104,7 +104,7 @@ const Add = () => {
               name="category"
               id="category"
               onChange={handleChange}
-              defaultValue="design"
+              defaultValue="1"
             >
               {category.map((c) => (
                 <option key={c.id} value={c.id}>

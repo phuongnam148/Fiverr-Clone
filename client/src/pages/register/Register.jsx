@@ -109,7 +109,7 @@ const Register = () => {
             type="tel"
             placeholder="+1 234 567 89"
             onChange={handelChange}
-            pattern="[0-9]"
+            pattern="[0-9]{10}"
             required
           />
           <label htmlFor="">Country</label>
