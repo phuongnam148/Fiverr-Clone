@@ -20,7 +20,7 @@ export const createMessage = async (req, res, next) => {
             desc: req.body.desc
         })
         const saveMessage = await newMessage.save()
-       
+
         // update Conversation
         await Conversation.findOneAndUpdate(
             { id: req.body.conversationID },
@@ -33,7 +33,7 @@ export const createMessage = async (req, res, next) => {
             },
             { new: true }
         );
-       
+
 
         res.status(201).send(saveMessage)
     } catch (error) {
