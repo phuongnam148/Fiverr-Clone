@@ -1,6 +1,9 @@
-import express, { json } from "express";
+import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
 import userRouter from "./routes/user.route.js";
 import gigRouter from "./routes/gig.route.js";
 import conversationRouter from "./routes/conversation.route.js";
@@ -9,9 +12,6 @@ import reviewRouter from "./routes/review.route.js";
 import orderRouter from "./routes/order.route.js";
 import authRouter from "./routes/auth.route.js";
 import wheelRouter from "./routes/wheel.route.js";
-
-import cookieParser from "cookie-parser";
-import cors from "cors";
 
 const app = express();
 const port = 3000;
